@@ -28,6 +28,7 @@ const props = defineProps({
 
 const isActiveMenu = ref(false);
 const itemKey = ref(null);
+const loading = ref(false);
 
 onBeforeMount(() => {
   itemKey.value = props.parentItemKey ? props.parentItemKey + "-" + props.index : String(props.index);
@@ -61,6 +62,13 @@ function itemClick(event, item) {
   const foundItemKey = item.items ? (isActiveMenu.value ? props.parentItemKey : itemKey) : itemKey.value;
 
   setActiveMenuItem(foundItemKey);
+
+  if (item.to) {
+    loading.value = true;
+    setTimeout(() => {
+      loading.value = false;
+    }, 100);
+  }
 }
 
 function checkActiveRoute(item) {
@@ -80,6 +88,7 @@ function checkActiveRoute(item) {
       <i :class="item.icon" class="layout-menuitem-icon"></i>
       <span class="layout-menuitem-text">{{ item.label }}</span>
       <i v-if="item.items" class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
+      <i v-if="loading" class="pi pi-spin pi-spinner ml-2"></i>
     </router-link>
     <Transition v-if="item.items && item.visible !== false" name="layout-submenu">
       <ul v-show="root ? true : isActiveMenu" class="layout-submenu">
