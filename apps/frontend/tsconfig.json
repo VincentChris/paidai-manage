@@ -5,8 +5,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "lib": ["ES2015", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "vue"],
+    "moduleResolution": "node"
   },
   "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"]
 }
